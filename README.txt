@@ -1,5 +1,3 @@
-Tennis-Abrechnung PWA Version 1.8
-
-Neu: Platzart Halle/Freiluftplätze pro Termin. Freiluftplätze haben keine Hallen- und Lichtkosten. Neuer Bereich Material mit Bezeichnung, Kaufdatum und Preis; Materialkosten fließen nach Kaufdatum in Übersicht, Auswertung und PDF ein.
-
-Vor Update Datensicherung erstellen. Die fünf Dateien direkt in das bestehende GitHub-Repository hochladen und vorhandene Dateien überschreiben. App nicht deinstallieren und Browserdaten nicht löschen.
+Tennis-Abrechnung PWA Version 2.0
+Terminübersicht: neueste Termine zuerst, am gleichen Tag spätere Uhrzeit zuerst.
+Vor dem Hochladen eine Datensicherung erstellen. Alle fünf Dateien ins Hauptverzeichnis des GitHub-Repositories hochladen.
