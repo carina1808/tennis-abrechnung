@@ -1,5 +1,5 @@
-Version 1.2: Beliebig viele aktive Teilnehmerinnen hinzufügen und entfernen; entfernte Personen bleiben für alte Termine und Zahlungen archiviert. Maximal vier Personen pro Termin. Für das Update die Dateien im selben GitHub-Repository ersetzen. Daten bleiben bei unveränderter URL im lokalen Browserspeicher erhalten. Vorher JSON-Datensicherung in der App herunterladen. Bei verzögerter Anzeige App schließen und neu öffnen.
+Tennis-Abrechnung PWA Version 1.5
 
-Version 1.3: Symbole für Hinzufügen, Umbenennen und Entfernen sowie Termin löschen.
+Termin bearbeiten: nur ausgewählte Teilnehmerinnen sichtbar, weitere über aufklappbare Auswahl. Zahlungsstatus direkt umschaltbar. Aktionen unten in einer Zeile.
 
-Version 1.4: Uhrzeit je Termin (HH:MM). Mehrere getrennte Termine am selben Datum möglich. Frühere Termine ohne Uhrzeit bleiben erhalten und werden als 'Uhrzeit offen' angezeigt.
+Vor dem Update Datensicherung herunterladen. Dateien im GitHub-Repository ersetzen, Veröffentlichung abwarten, App neu öffnen. Daten bleiben bei gleicher URL lokal erhalten.
