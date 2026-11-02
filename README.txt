@@ -1,7 +1,5 @@
-Tennis-Abrechnung PWA Version 1.6
+Tennis-Abrechnung PWA Version 1.8
 
-Unter Personen werden jetzt die Anzahl der Teilnahmen und die Summe der als bezahlt markierten Beträge pro Teilnehmerin angezeigt (alle gespeicherten Termine).
+Neu: Platzart Halle/Freiluftplätze pro Termin. Freiluftplätze haben keine Hallen- und Lichtkosten. Neuer Bereich Material mit Bezeichnung, Kaufdatum und Preis; Materialkosten fließen nach Kaufdatum in Übersicht, Auswertung und PDF ein.
 
-Vor dem Update Datensicherung herunterladen. Dateien im GitHub-Repository ersetzen, Veröffentlichung abwarten, App neu öffnen. Daten bleiben bei gleicher URL lokal erhalten.
-
-Version 1.7: Personen und Teilnehmerauswahl alphabetisch nach Namen sortiert.
+Vor Update Datensicherung erstellen. Die fünf Dateien direkt in das bestehende GitHub-Repository hochladen und vorhandene Dateien überschreiben. App nicht deinstallieren und Browserdaten nicht löschen.
