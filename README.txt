@@ -1,5 +1,5 @@
-Tennis-Abrechnung PWA Version 1.5
+Tennis-Abrechnung PWA Version 1.6
 
-Termin bearbeiten: nur ausgewählte Teilnehmerinnen sichtbar, weitere über aufklappbare Auswahl. Zahlungsstatus direkt umschaltbar. Aktionen unten in einer Zeile.
+Unter Personen werden jetzt die Anzahl der Teilnahmen und die Summe der als bezahlt markierten Beträge pro Teilnehmerin angezeigt (alle gespeicherten Termine).
 
 Vor dem Update Datensicherung herunterladen. Dateien im GitHub-Repository ersetzen, Veröffentlichung abwarten, App neu öffnen. Daten bleiben bei gleicher URL lokal erhalten.
