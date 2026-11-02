@@ -1,0 +1,1 @@
+Zum Testen index.html im Browser öffnen. Für die Installation als Android-PWA alle Dateien über HTTPS auf einem Webhost veröffentlichen und im Chrome-Menü „Zum Startbildschirm hinzufügen“ wählen. Daten liegen lokal im Browser (localStorage); vor dem Löschen von Browserdaten eine JSON-Sicherung erstellen. PDF über die Druckfunktion „Als PDF speichern“.
