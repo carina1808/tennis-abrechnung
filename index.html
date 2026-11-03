@@ -12,6 +12,28 @@
 .open-heading h3{margin:0}
 .open-total{font-size:18px;font-weight:750;font-variant-numeric:tabular-nums}
 @media(max-width:340px){#stats .stat-value{font-size:17px}#stats .stat-tile{padding:10px}}
+
+/* Einheitliche Teilnehmerkacheln im Termineditor */
+#choices{display:grid;gap:10px}
+.participant-tile{background:#fff;border:1px solid #d6e4da;border-left:4px solid #176b4a;border-radius:12px;padding:12px 13px;box-shadow:0 2px 8px #153d2010;min-width:0}
+.participant-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:11px;border-bottom:1px solid #edf2ee}
+.participant-name{font-size:17px;overflow-wrap:anywhere;min-width:0}
+.participant-remove{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#526d5d;margin:0;white-space:nowrap;cursor:pointer}
+.participant-remove input{width:21px;height:21px;margin:0;accent-color:#176b4a}
+.participant-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:11px}
+.participant-fields>label{display:flex;flex-direction:column;gap:7px;margin:0;min-width:0}
+.participant-fields>label>span:first-child{font-size:12px;font-weight:600;color:#687b70}
+.participant-price-input,.participant-paid-input{display:flex;align-items:center;gap:7px;min-height:43px}
+.participant-price-input .individual-price{width:100%!important;min-width:0!important;max-width:115px;padding:9px!important;border-radius:8px}
+.participant-price-input>span{font-size:15px;color:#526d5d}
+.participant-paid-input{background:#f3f7f4;border-radius:8px;padding:0 9px}
+.participant-paid-input input{width:23px;height:23px;flex-shrink:0;margin:0;accent-color:#176b4a}
+.participant-paid-input .payment-status{font-size:14px;color:#687b70}
+.participant-paid-input .payment-status.is-paid{color:#176b4a;font-weight:700}
+.person-available{background:#fff;border:1px solid #d6e4da;border-radius:9px;padding:11px;margin-top:7px}
+.person-select{display:flex;align-items:center;gap:10px;margin:0;cursor:pointer}
+.person-select input{width:22px;height:22px;margin:0;accent-color:#176b4a}
+@media(max-width:340px){.participant-fields{gap:8px}.participant-tile{padding:10px}.participant-price-input .individual-price{max-width:95px}}
 </style></head><body><header>Tennis-Abrechnung</header><main>
 <section id="home" class="active"><h2>Übersicht</h2><div id="stats"></div><div class="open-heading"><h3>Offene Zahlungen</h3><span class="open-total" id="openTotal">0,00 €</span></div><div id="open"></div></section>
 <section id="appointments"><div class="row"><h2>Termine</h2><button class="iconbtn" onclick="editSession()" aria-label="Termin hinzufügen" title="Termin hinzufügen"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></div><div id="sessionList"></div></section>
@@ -73,7 +95,22 @@ function setupTimeSelectors(){byId('hour').innerHTML=Array.from({length:24},(_,i
 function editSession(id){editing=id??null;manual=false;individualAmounts=new Map();const s=state.sessions.find(s=>s.id===id);if(s)for(const e of s.entries)individualAmounts.set(e.person,e.amount);byId('editorTitle').textContent=s?'Termin bearbeiten':'Neuer Termin';byId('date').value=s?.date||localDate();setTime(s?.time||'15:00');byId('hall').value=s?String(s.hall/100).replace('.',','):'20';byId('light').value=s?String(s.light/100).replace('.',','):'2';byId('venue').value=s?.venue||(s&&s.hall===0&&s.light===0?'outdoor':'hall');venueChanged(false);byId('unit').value=s?.entries.length?String(s.entries[0].amount/100).replace('.',','):'';manual=!!s;byId('deleteBtn').style.display=s?'inline-flex':'none';byId('addChoices').open=!s;drawChoices(s);show('editor');preview()}
 function venueChanged(reset=true){const outdoor=byId('venue').value==='outdoor';byId('venueCosts').classList.toggle('hidden',outdoor);byId('outdoorInfo').classList.toggle('hidden',!outdoor);if(reset)preview()}
 function drawChoices(s){const active=state.people.filter(p=>!p.archived||s?.entries.some(e=>e.person===p.id)).sort(alphabetisch);const selectedIds=new Set(s?.entries.map(e=>e.person)||[]);byId('choices').innerHTML=active.filter(p=>selectedIds.has(p.id)).map(p=>personChoice(p,true,s)).join('')||'<p class="muted">Noch keine Teilnehmerin ausgewählt.</p>';byId('otherChoices').innerHTML=active.filter(p=>!selectedIds.has(p.id)).map(p=>personChoice(p,false,s)).join('');byId('addChoices').style.display=active.some(p=>!selectedIds.has(p.id))?'block':'none'}
-function personChoice(p,checked,s){const paid=s?.entries.find(e=>e.person===p.id)?.paid||false;const amount=individualAmounts.get(p.id);return `<div class="card person-line ${checked?'selected-person':'unselected-person'}"><input type="checkbox" class="choice" id="person-${p.id}" value="${p.id}" ${checked?'checked':''} onchange="choiceChanged(this)"><label class="person-name" for="person-${p.id}">${safe(p.name)}</label>${checked?`<label class="price-wrap">€ <input class="individual-price" data-person="${p.id}" inputmode="decimal" aria-label="Preis für ${safe(p.name)}" value="${amount===undefined?'':(amount/100).toFixed(2).replace('.',',')}" oninput="individualPriceChanged(this)"></label><div class="payment-row"><label class="pay-toggle"><input type="checkbox" class="paid-choice" data-person="${p.id}" ${paid?'checked':''} onchange="paymentChanged(this)">Bezahlt</label><span class="payment-status ${paid?'is-paid':''}">${paid?'Zahlung erfasst':'Noch offen'}</span></div>`:''}</div>`}
+function personChoice(p,checked,s){
+ const paid=s?.entries.find(e=>e.person===p.id)?.paid||false;
+ const amount=individualAmounts.get(p.id);
+ const amountValue=amount===undefined?'':(amount/100).toFixed(2).replace('.',',');
+ if(!checked)return `<div class="person-available"><label class="person-select" for="person-${p.id}"><input type="checkbox" class="choice" id="person-${p.id}" value="${p.id}" onchange="choiceChanged(this)"><span>${safe(p.name)}</span></label></div>`;
+ return `<div class="participant-tile">
+   <div class="participant-head">
+     <strong class="participant-name">${safe(p.name)}</strong>
+     <label class="participant-remove" for="person-${p.id}" title="Aus Termin entfernen"><input type="checkbox" class="choice" id="person-${p.id}" value="${p.id}" checked onchange="choiceChanged(this)"><span>Teilnahme</span></label>
+   </div>
+   <div class="participant-fields">
+     <label class="participant-price" for="price-${p.id}"><span>Betrag</span><span class="participant-price-input"><input id="price-${p.id}" class="individual-price" data-person="${p.id}" inputmode="decimal" aria-label="Betrag für ${safe(p.name)}" value="${amountValue}" oninput="individualPriceChanged(this)"><span>€</span></span></label>
+     <label class="participant-paid" for="paid-${p.id}"><span>Zahlungsstatus</span><span class="participant-paid-input"><input type="checkbox" id="paid-${p.id}" class="paid-choice" data-person="${p.id}" ${paid?'checked':''} onchange="paymentChanged(this)"><span class="payment-status ${paid?'is-paid':''}">${paid?'Bezahlt':'Offen'}</span></span></label>
+   </div>
+ </div>`;
+}
 function paymentChanged(el){const status=el.closest('.payment-row')?.querySelector('.payment-status');if(status){status.textContent=el.checked?'Zahlung erfasst':'Noch offen';status.classList.toggle('is-paid',el.checked)}}
 function selected(){return [...document.querySelectorAll('.choice:checked')].map(x=>Number(x.value))}
 function individualPriceChanged(el){const value=cents(el.value);if(value!==null)individualAmounts.set(Number(el.dataset.person),value);else individualAmounts.delete(Number(el.dataset.person));manual=true;preview(true)}
